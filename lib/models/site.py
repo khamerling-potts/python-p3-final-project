@@ -1,5 +1,6 @@
 from models.__init__ import CONN, CURSOR
-from models.project import Project
+
+# from models.project import Project
 
 
 class Site:
@@ -44,28 +45,33 @@ class Site:
     def classification(self):
         return self._classification
 
-    @classmethod
+    # make case insensitive
+    # WORKING :)
+    @classification.setter
     def classification(self, classification):
         options = ["Government", "Academic", "Medical"]
         if classification in options:
             self._classification = classification
         else:
+            print(classification)
             raise Exception(
                 "Site's classification must be one of the following strings: 'Government', 'Academic', 'Medical'"
             )
 
+    # WORKING :)
     @classmethod
     def create_table(cls):
         sql = """
-            CREATE TABLE IF NOT EXISTS sites
+            CREATE TABLE IF NOT EXISTS sites (
             id INTEGER PRIMARY KEY,
             name TEXT,
             city TEXT,
-            classification TEXT
+            classification TEXT)
         """
         CURSOR.execute(sql)
         CONN.commit()
 
+    # WORKING :)
     @classmethod
     def drop_table(cls):
         sql = """
@@ -74,6 +80,7 @@ class Site:
         CURSOR.execute(sql)
         CONN.commit()
 
+    # WORKING :)
     @classmethod
     def create(cls, name, city, classification):
         site = cls(name, city, classification)
@@ -86,6 +93,7 @@ class Site:
         site.id = CURSOR.lastrowid
         cls.all[site.id] = site
 
+    # WORKING :)
     def update(self):
         sql = """
             UPDATE sites
@@ -95,6 +103,7 @@ class Site:
         CURSOR.execute(sql, (self.name, self.city, self.classification, self.id))
         CONN.commit()
 
+    # WORKING :)
     def delete(self):
         sql = """DELETE FROM sites WHERE id = ?"""
         CURSOR.execute(sql, (self.id,))
@@ -102,6 +111,7 @@ class Site:
         del type(self).all[self.id]
         self.id = None
 
+    # WORKING :)
     @classmethod
     def instance_from_db(cls, row):
         if site := cls.all.get(row[0]):
@@ -113,23 +123,26 @@ class Site:
             cls.all[site.id] = site
         return site
 
+    # WORKING :)
     @classmethod
     def get_all(cls):
         sql = """SELECT * FROM sites"""
         rows = CURSOR.execute(sql).fetchall()
         return [cls.instance_from_db(row) for row in rows]
 
+    # WORKING :)
     @classmethod
     def find_by_id(cls, id):
         all_sites = cls.get_all()
-        target = filter(lambda instance: instance.id == id, all_sites)[0]
-        return target if target else None
+        filtered = list(filter(lambda instance: instance.id == id, all_sites))
+        return filtered[0] if len(filtered) else None
 
+    # WORKING :)
     @classmethod
     def find_by_name(cls, name):
         all_sites = cls.get_all()
-        target = filter(lambda instance: instance.name == name, all_sites)[0]
-        return target if target else None
+        filtered = list(filter(lambda instance: instance.name == name, all_sites))
+        return filtered[0] if len(filtered) else None
 
     # COME BACK TO THIS #
     def investigators(self):
