@@ -7,7 +7,8 @@ from models.project import Project
 class Investigator:
     all = {}
 
-    def __init__(self, name, site_id, project_id, id=None):
+    # make project id required after implementing project model
+    def __init__(self, name, site_id, project_id=None, id=None):
         self.id = id
         self.name = name
         self.site_id = site_id
@@ -53,12 +54,15 @@ class Investigator:
     #     else:
     #         raise Exception("An investigator's project_id must be an integer that references a project in the database")
 
+    # add project id as foreign key
     @classmethod
     def create_table(cls):
         sql = """
             CREATE TABLE IF NOT EXISTS investigators(
             id INTEGER PRIMARY KEY,
             name TEXT,
+            project_id INTEGER,
+            site_id INTEGER,
             FOREIGN KEY (site_id) REFERENCES sites(id)
         )"""
         CURSOR.execute(sql)
@@ -72,9 +76,9 @@ class Investigator:
 
     @classmethod
     def create(cls, name, site_id, project_id):
-        investigator = Investigator(name, site_id, project_id)
+        investigator = cls(name, site_id, project_id)
         sql = """
-            INSERT INTO TABLE investigators (name, site_id, project_id)
+            INSERT INTO investigators (name, site_id, project_id)
             VALUES (?, ?, ?)
         """
         CURSOR.execute(sql, (name, site_id, project_id))
