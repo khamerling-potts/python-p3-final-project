@@ -13,7 +13,7 @@ class Site:
         self.classification = classification
 
     def __repr__(self):
-        return f"Site {self.id}: {self.name}, {self.city}, {self.classification} institution."
+        return f"Site {self.id}: {self.name} | {self.city} | {self.classification} institution"
 
     @property
     def name(self):
@@ -92,6 +92,7 @@ class Site:
         CONN.commit()
         site.id = CURSOR.lastrowid
         cls.all[site.id] = site
+        return site
 
     # WORKING :)
     def update(self):
@@ -145,5 +146,12 @@ class Site:
         return filtered[0] if len(filtered) else None
 
     # COME BACK TO THIS #
-    def investigators(self):
-        from models.investigator import Investigator
+    # def investigators(self):
+    #     from models.investigator import Investigator
+
+    #     sql = """
+    #         SELECT * FROM investigators
+    #         WHERE site_id = ?
+    #     """
+    #     rows = CURSOR.execute(sql, (self.id)).fetchall()
+    #     return [Investigator.instance_from_db(row) for row in rows]
