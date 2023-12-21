@@ -145,13 +145,12 @@ class Site:
         filtered = list(filter(lambda instance: instance.name == name, all_sites))
         return filtered[0] if len(filtered) else None
 
-    # COME BACK TO THIS #
-    # def investigators(self):
-    #     from models.investigator import Investigator
+    def investigators(self):
+        from models.investigator import Investigator
 
-    #     sql = """
-    #         SELECT * FROM investigators
-    #         WHERE site_id = ?
-    #     """
-    #     rows = CURSOR.execute(sql, (self.id)).fetchall()
-    #     return [Investigator.instance_from_db(row) for row in rows]
+        sql = """
+            SELECT * FROM investigators
+            WHERE site_id = ?
+        """
+        rows = CURSOR.execute(sql, (self.id,)).fetchall()
+        return [Investigator.instance_from_db(row) for row in rows]

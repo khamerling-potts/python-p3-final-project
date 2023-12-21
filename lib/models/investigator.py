@@ -61,8 +61,8 @@ class Investigator:
             CREATE TABLE IF NOT EXISTS investigators(
             id INTEGER PRIMARY KEY,
             name TEXT,
-            project_id INTEGER,
             site_id INTEGER,
+            project_id INTEGER,
             FOREIGN KEY (site_id) REFERENCES sites(id)
         )"""
         CURSOR.execute(sql)
