@@ -8,7 +8,7 @@ class Investigator:
     all = {}
 
     # make project id required after implementing project model
-    def __init__(self, name, site_id, project_id=None, id=None):
+    def __init__(self, name, site_id, project_id, id=None):
         self.id = id
         self.name = name
         self.site_id = site_id
@@ -43,18 +43,19 @@ class Investigator:
                 "An investigator's site_id must be an integer that references a site in the database"
             )
 
-    # @property
-    # def project_id(self):
-    #     return self._project_id
+    @property
+    def project_id(self):
+        return self._project_id
 
-    # @project_id.setter
-    # def project_id(self, project_id):
-    #     if isinstance(project_id, int) and Project.find_by_id(project_id):
-    #         self._project_id = project_id
-    #     else:
-    #         raise Exception("An investigator's project_id must be an integer that references a project in the database")
+    @project_id.setter
+    def project_id(self, project_id):
+        if isinstance(project_id, int) and Project.find_by_id(project_id):
+            self._project_id = project_id
+        else:
+            raise Exception(
+                "An investigator's project_id must be an integer that references a project in the database"
+            )
 
-    # add project id as foreign key
     @classmethod
     def create_table(cls):
         sql = """
@@ -63,7 +64,8 @@ class Investigator:
             name TEXT,
             site_id INTEGER,
             project_id INTEGER,
-            FOREIGN KEY (site_id) REFERENCES sites(id)
+            FOREIGN KEY (site_id) REFERENCES sites(id),
+            FOREIGN KEY (project_id) REFERENCES projects(id)
         )"""
         CURSOR.execute(sql)
         CONN.commit()
