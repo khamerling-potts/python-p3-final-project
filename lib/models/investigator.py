@@ -27,7 +27,7 @@ class Investigator:
             self._name = name
         else:
             raise Exception(
-                "Investigator's name must be a string at least two characters long."
+                "Investigator's name must be a string at least 2 characters long."
             )
 
     @property
@@ -76,13 +76,13 @@ class Investigator:
 
     @classmethod
     def create(cls, name, site_id, project_id):
-        investigator = cls(name, site_id, project_id)
         sql = """
             INSERT INTO investigators (name, site_id, project_id)
             VALUES (?, ?, ?)
         """
         CURSOR.execute(sql, (name, site_id, project_id))
         CONN.commit()
+        investigator = cls(name, site_id, project_id)
         investigator.id = CURSOR.lastrowid
         cls.all[investigator.id] = investigator
         return investigator

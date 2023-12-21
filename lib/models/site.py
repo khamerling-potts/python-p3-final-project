@@ -37,9 +37,7 @@ class Site:
         if isinstance(city, str) and len(city) > 1:
             self._city = city
         else:
-            raise Exception(
-                "Site's name must be a string at least two characters long."
-            )
+            raise Exception("Site's name must be a string at least 2 characters long.")
 
     @property
     def classification(self):
@@ -75,7 +73,7 @@ class Site:
     @classmethod
     def drop_table(cls):
         sql = """
-            DROP TABLE IF EXISTS sites;
+            DROP TABLE IF EXISTS sites
         """
         CURSOR.execute(sql)
         CONN.commit()
@@ -83,13 +81,13 @@ class Site:
     # WORKING :)
     @classmethod
     def create(cls, name, city, classification):
-        site = cls(name, city, classification)
         sql = """
             INSERT INTO sites (name, city, classification)
             VALUES (?, ?, ?)
         """
         CURSOR.execute(sql, (name, city, classification))
         CONN.commit()
+        site = cls(name, city, classification)
         site.id = CURSOR.lastrowid
         cls.all[site.id] = site
         return site
