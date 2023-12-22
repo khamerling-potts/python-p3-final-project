@@ -152,3 +152,15 @@ class Site:
         """
         rows = CURSOR.execute(sql, (self.id,)).fetchall()
         return [Investigator.instance_from_db(row) for row in rows]
+
+    def projects(self):
+        from models.project import Project
+
+        sql = """
+            SELECT * FROM projects
+            INNER JOIN investigators
+            ON projects.id = investigators.project_id
+            WHERE investigators.site_id = ?
+        """
+        rows = CURSOR.execute(sql, (self.id,)).fetchall()
+        return [Project.instance_from_db(row) for row in rows]
