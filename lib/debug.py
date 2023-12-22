@@ -21,12 +21,28 @@ def reset_database():
         Site.create("UChicago", "Chicago", "Academic"),
         Site.create("Central Texas VA", "Waco", "Government"),
     ]
+    print("did sites")
+
+    Project.drop_table()
+    Project.create_table()
+    projects = [
+        Project.create("Predicting Depression in Long COVID Patients", 100000),
+        Project.create("Project Life Force - Randomized Control Trial", 1500000),
+        Project.create("Prognostic and Diagnostic PTSD Biomarkers", 500000),
+        Project.create("Telehealth CBT for Chronic Pain", 750000),
+        Project.create("Interpersonal Emotion Regulation in young Adults", 2000),
+        Project.create("Neuroimaging to Predict Bipolar Disorder", 9300000),
+        Project.create("Comorbidity of OCD and Autism - A Longitudinal Study", 40000),
+    ]
+    print("did projects")
 
     Investigator.drop_table()
     Investigator.create_table()
-    # add project id here instead of None
     for i in range(30):
-        Investigator.create(Faker().unique.name(), choice(sites).id, None)
+        Investigator.create(
+            Faker().unique.name(), choice(sites).id, choice(projects).id
+        )
+    print("did investigators")
 
 
 reset_database()

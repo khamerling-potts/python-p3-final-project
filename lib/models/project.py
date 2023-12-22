@@ -84,6 +84,8 @@ class Project:
         sql = """DELETE FROM projects WHERE id = ?"""
         CURSOR.execute(sql, (self.id,))
         CONN.commit()
+        del type(self).all[self.id]
+        self.id = None
 
     @classmethod
     def instance_from_db(cls, row):
@@ -101,19 +103,21 @@ class Project:
         rows = CURSOR.execute(sql).fetchall()
         return [cls.instance_from_db(row) for row in rows]
 
-    def find_by_id(self, id):
-        all_projects = type(self).get_all()
+    @classmethod
+    def find_by_id(cls, id):
+        all_projects = cls.get_all()
         filtered = list(filter(lambda instance: instance.id == id, all_projects))
         return filtered[0] if len(filtered) else None
 
-    def find_by_name(self, name):
-        all_projects = type(self).get_all()
-        filtered = list(filter(lambda instance: instance.name == name))
+    @classmethod
+    def find_by_title(cls, title):
+        all_projects = cls.get_all()
+        filtered = list(filter(lambda instance: instance.title == title, all_projects))
         return filtered[0] if len(filtered) else None
 
     def investigators(self):
-        from investigator import Investigator
+        from models.investigator import Investigator
 
-        sql = """SELECT * FROM investigators WHERE project_id == ?"""
+        sql = """SELECT * FROM investigators WHERE project_id = ?"""
         rows = CURSOR.execute(sql, (self.id,)).fetchall()
         return [Investigator.instance_from_db(row) for row in rows]

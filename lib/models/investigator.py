@@ -52,6 +52,7 @@ class Investigator:
         if isinstance(project_id, int) and Project.find_by_id(project_id):
             self._project_id = project_id
         else:
+            print(project_id)
             raise Exception(
                 "An investigator's project_id must be an integer that references a project in the database"
             )
