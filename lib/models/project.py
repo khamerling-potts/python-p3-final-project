@@ -121,3 +121,15 @@ class Project:
         sql = """SELECT * FROM investigators WHERE project_id = ?"""
         rows = CURSOR.execute(sql, (self.id,)).fetchall()
         return [Investigator.instance_from_db(row) for row in rows]
+
+    def sites(self):
+        from models.site import Site
+
+        sql = """
+            SELECT * FROM sites
+            INNER JOIN investigators
+            ON sites.id = investigators.site_id
+            WHERE investigators.project_id = ?
+        """
+        rows = CURSOR.execute(sql, (self.id,)).fetchall()
+        return [Site.instance_from_db(row) for row in rows]
