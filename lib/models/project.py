@@ -60,13 +60,13 @@ class Project:
 
     @classmethod
     def create(cls, title, funding):
+        project = cls(title, funding)
         sql = """
             INSERT INTO projects (title, funding)
             VALUES (?, ?)
         """
         CURSOR.execute(sql, (title, funding))
         CONN.commit()
-        project = cls(title, funding)
         project.id = CURSOR.lastrowid
         cls.all[project.id] = project
         return project
