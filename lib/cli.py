@@ -14,10 +14,10 @@ def main():
         elif choice == "1":
             print("\n")
             print("------------------------")
-            list_sites()
             print("\n")
-            while sites():
-                sites()
+            while True:
+                if not sites():
+                    break
         else:
             print("Invalid choice")
 

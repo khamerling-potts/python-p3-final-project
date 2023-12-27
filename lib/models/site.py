@@ -126,7 +126,6 @@ class Site:
     @classmethod
     def get_all(cls):
         sql = """SELECT * FROM sites"""
-        print(cls.all)
         rows = CURSOR.execute(sql).fetchall()
         return [cls.instance_from_db(row) for row in rows]
 

@@ -49,11 +49,16 @@ def site_details(index):
     site_details_menu()
     choice = input("> ")
     if choice == "I":
-        while investigators(site):
-            investigators(site)
+        while True:
+            if not investigators(site):
+                break
+        return True
+    elif choice == "B":
+        return False
 
 
 def sites():
+    list_sites()
     sites_menu()
     choice = input("> ")
     if choice == "A":
@@ -62,7 +67,10 @@ def sites():
     elif choice == "B":
         return False
     elif int(choice) in range(1, len(Site.get_all()) + 1):
-        site_details(int(choice) - 1)
+        while True:
+            if not site_details(int(choice) - 1):
+                break
+        return True
     elif choice == "0":
         exit_program()
     else:
@@ -74,6 +82,12 @@ def investigators(site):
         investigators = site.investigators()
         list_investigators(investigators)
         investigators_menu()
+        choice = input("> ")
+        if choice == "A":
+            add_investigator(site.id)
+            return True
+        if choice == "B":
+            return False
 
 
 def list_investigators(investigators):
@@ -86,3 +100,13 @@ def investigators_menu():
     print("Type B to go back")
     print("Type the number of an Investigator to view its details")
     print("Type 0 to exit the program")
+
+
+def add_investigator(site_id):
+    name = input("Enter the Investigator's name: ")
+    project_id = int(input("Enter the Investigator's project id: "))
+    try:
+        investigator = Investigator.create(name, site_id, project_id)
+        print(f"Successfully added {name} to this Site's Investigator's")
+    except Exception as exc:
+        print("Error creating Investigator: ", exc)
