@@ -163,4 +163,5 @@ class Site:
             WHERE investigators.site_id = ?
         """
         rows = CURSOR.execute(sql, (self.id,)).fetchall()
-        return [Project.instance_from_db(row) for row in rows]
+        projects = [Project.instance_from_db(row) for row in rows]
+        return list(set(projects))

@@ -9,12 +9,10 @@ def main():
     while True:
         main_menu()
         choice = input("> ")
+        print("\n")
         if choice == "0":
             exit_program()
         elif choice == "1":
-            print("\n")
-            print("------------------------")
-            print("\n")
             while True:
                 if not sites():
                     break
@@ -23,9 +21,12 @@ def main():
 
 
 def main_menu():
+    print("Main Menu:")
     print("Please select an option:")
     print("0. Exit the program")
-    print("1. List all research sites")
+    print("1. List all research Sites")
+    print("2. List all research Projects")
+    print("---------------------------")
 
 
 if __name__ == "__main__":
