@@ -10,13 +10,21 @@ from helpers import (
 )
 from seed import seed_database
 from rich.console import Console
+from art import text2art
 
 console = Console()
-print = console.print
+rprint = console.print
 
 
 def main():
     seed_database()
+
+    # ASCII Heading
+    rprint(
+        f"[light_slate_grey]{text2art('RDM', font='isometric3')[0:-2]}[/light_slate_grey]",
+        "[light_slate_grey]research data manager.[/light_slate_grey]\n\n\n",
+    )
+
     while True:
         main_menu()
         choice = input("> ")
@@ -42,15 +50,15 @@ def main():
 
 
 def main_menu():
-    print("Main Menu\n", style="bold bright_cyan")
-    print("Please select an option:\n")
-    print("1. List all research Sites")
-    print("2. List all research Projects")
-    print("3. Find Site by name")
-    print("4. Find Project by title")
-    print("5. Find Investigator by name")
-    print("0. Exit the program")
-    print(
+    rprint("Main Menu\n", style="bold bright_cyan")
+    rprint("Please select an option:\n")
+    rprint("1. List all research Sites")
+    rprint("2. List all research Projects")
+    rprint("3. Find Site by name")
+    rprint("4. Find Project by title")
+    rprint("5. Find Investigator by name")
+    rprint("0. Exit the program")
+    rprint(
         "\n----------------------------------------------------------------\n",
         style="light_sky_blue3",
     )

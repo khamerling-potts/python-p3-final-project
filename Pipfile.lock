@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "733f6a247f01523283af43c3a48d30a368a435cc8cc9ba15bfbf0fc08c78dac2"
+            "sha256": "663f6c020e3d3f275732a845931341c6f8d20452f070307972b69aa475896224"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -24,6 +24,15 @@
             "markers": "sys_platform == 'darwin'",
             "version": "==0.1.3"
         },
+        "art": {
+            "hashes": [
+                "sha256:159819c418001467f8d79616fa0814277deac97c8a363d1eb3e7c0a31526bfc3",
+                "sha256:6ab3031e3b7710039e73497b0e750cadfe04d4c1279ce3a123500dbafb9e1b64"
+            ],
+            "index": "pypi",
+            "markers": "python_version >= '3.5'",
+            "version": "==6.1"
+        },
         "asttokens": {
             "hashes": [
                 "sha256:051ed49c3dcae8913ea7cd08e46a606dba30b79993209636c4875bc1d637bc24",
@@ -45,15 +54,6 @@
                 "sha256:fbbce6a29f263178a1f7915c1940bde0ec2b2a967566fe1c65c1dfb7422bd255"
             ],
             "version": "==0.2.0"
-        },
-        "colorama": {
-            "hashes": [
-                "sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44",
-                "sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6"
-            ],
-            "index": "pypi",
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4, 3.5, 3.6'",
-            "version": "==0.4.6"
         },
         "decorator": {
             "hashes": [
