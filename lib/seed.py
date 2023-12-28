@@ -41,3 +41,4 @@ def seed_database():
 
 seed_database()
 print("Seeded database from seed.py")
+print("\n")

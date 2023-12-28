@@ -2,6 +2,7 @@
 from models.investigator import Investigator
 from models.project import Project
 from models.site import Site
+from colorama import Fore, Back, Style
 
 
 def exit_program():
@@ -15,6 +16,7 @@ def all_sites():
     list_sites(sites)
     all_sites_menu()
     choice = input("> ")
+    print("\n")
     if choice == "A":
         add_site()
         return True
@@ -114,6 +116,7 @@ def investigators(site=None, project=None):
     list_investigators(investigators)
     investigators_menu()
     choice = input("> ")
+    print("\n")
     if choice == "A":
         add_investigator(site, project)
         return True
@@ -219,6 +222,7 @@ def site_projects(site):
     list_projects(projects)
     site_projects_menu()
     choice = input("> ")
+    print("\n")
     if choice == "B":
         return False
     elif choice == "0":
@@ -246,6 +250,7 @@ def all_projects():
     list_projects(projects)
     all_projects_menu()
     choice = input("> ")
+    print("\n")
     if choice == "A":
         add_project()
         return True
@@ -319,6 +324,7 @@ def project_sites(project):
     list_sites(sites)
     project_sites_menu()
     choice = input("> ")
+    print("\n")
     if choice == "B":
         return False
     elif choice == "0":

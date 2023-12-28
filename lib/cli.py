@@ -2,13 +2,11 @@
 
 from helpers import (
     exit_program,
-    list_sites,
-    add_site,
-    all_sites_menu,
     all_sites,
     all_projects,
 )
 from seed import seed_database
+from colorama import Fore, Back, Style
 
 
 def main():
@@ -32,12 +30,13 @@ def main():
 
 
 def main_menu():
-    print("Main Menu:")
+    print(Fore.LIGHTCYAN_EX + Style.BRIGHT + "Main Menu\n" + Style.RESET_ALL)
     print("Please select an option:")
+    print("\n")
     print("0. Exit the program")
     print("1. List all research Sites")
     print("2. List all research Projects")
-    print("---------------------------")
+    print("\n_______________________________________")
 
 
 if __name__ == "__main__":
