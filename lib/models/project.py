@@ -84,6 +84,8 @@ class Project:
         CONN.commit()
 
     def delete(self):
+        for investigator in self.investigators():
+            investigator.delete()
         sql = """DELETE FROM projects WHERE id = ?"""
         CURSOR.execute(sql, (self.id,))
         CONN.commit()

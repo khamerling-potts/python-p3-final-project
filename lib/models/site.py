@@ -103,6 +103,8 @@ class Site:
 
     # WORKING :)
     def delete(self):
+        for investigator in self.investigators():
+            investigator.delete()
         sql = """DELETE FROM sites WHERE id = ?"""
         CURSOR.execute(sql, (self.id,))
         CONN.commit()

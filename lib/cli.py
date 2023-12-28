@@ -38,19 +38,22 @@ def main():
         elif choice == "5":
             find_investigator_by_name()
         else:
-            print("Invalid choice")
+            print("Invalid choice\n", style="bold red")
 
 
 def main_menu():
     print("Main Menu\n", style="bold bright_cyan")
     print("Please select an option:\n")
-    print("[bold bright_white]0.[/bold bright_white] Exit the program")
-    print("[bold bright_white]1.[/bold bright_white] List all research Sites")
-    print("[bold bright_white]2.[/bold bright_white] List all research Projects")
-    print("[bold bright_white]3.[/bold bright_white] Find Site by name")
-    print("[bold bright_white]4.[/bold bright_white] Find Project by title")
-    print("[bold bright_white]5.[/bold bright_white] Find Investigator by name")
-    print("\n_______________________________________\n", style="light_sky_blue3")
+    print("1. List all research Sites")
+    print("2. List all research Projects")
+    print("3. Find Site by name")
+    print("4. Find Project by title")
+    print("5. Find Investigator by name")
+    print("0. Exit the program")
+    print(
+        "\n----------------------------------------------------------------\n",
+        style="light_sky_blue3",
+    )
 
 
 if __name__ == "__main__":
