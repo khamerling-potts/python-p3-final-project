@@ -46,7 +46,8 @@ def find_site_by_name():
                 break
         return True
     else:
-        print(f"No site found with the name '{name}'\n", style="bold red")
+        print(f"No site found with the name '{name}'", style="bold red")
+        print("\n_______________________________________\n", style="light_sky_blue3")
         return True
 
 
@@ -67,14 +68,16 @@ def site_details(site):
         return True
     elif choice == "D":
         site.delete()
-        print(f"Successfully deleted {site.name}\n", style="bold green")
+        print(f"Successfully deleted {site.name}", style="bold green")
+        print("\n_______________________________________\n", style="light_sky_blue3")
         return False
     elif choice == "B":
         return False
     elif choice == "0":
         exit_program()
     else:
-        print("Invalid Choice\n", style="bold red")
+        print("Invalid Choice", style="bold red")
+        print("\n_______________________________________\n", style="light_sky_blue3")
         return True
 
 
@@ -106,9 +109,12 @@ def add_site():
     )
     try:
         site = Site.create(name, city, classification)
-        print(f"Successfully created {name}\n", style="bold green")
+        print(f"Successfully created {name}", style="bold green")
+        print("\n_______________________________________\n", style="light_sky_blue3")
+
     except Exception as exc:
-        print("Error creating Site: ", exc, "\n", style="bold red")
+        print("Error creating Site: ", exc, style="bold red")
+        print("\n_______________________________________\n", style="light_sky_blue3")
 
 
 def site_details_menu():
@@ -117,7 +123,7 @@ def site_details_menu():
     print("Type [bold cyan]D[/bold cyan] to delete this Site")
     print("Type B to go back")
     print("Type 0 to exit the program")
-    print("---------------------------")
+    print("\n_______________________________________\n", style="light_sky_blue3")
 
 
 def investigators(site=None, project=None):
@@ -146,21 +152,22 @@ def investigators(site=None, project=None):
     elif choice == "0":
         exit_program()
     else:
-        print("Invalid Choice\n", style="bold red")
+        print("Invalid Choice", style="bold red")
+        print("\n_______________________________________\n", style="light_sky_blue3")
         return True
 
 
 def investigator_details(investigator):
     print(
-        f"{investigator.name}: Works on Project '{Project.find_by_id(investigator.project_id).title}' at {Site.find_by_id(investigator.site_id).name}"
+        f"{investigator.name}: Works on Project '{Project.find_by_id(investigator.project_id).title}' at {Site.find_by_id(investigator.site_id).name}\n"
     )
-    print("\n")
     investigator_details_menu()
     choice = input("> ")
     print("\n")
     if choice == "D":
         investigator.delete()
-        print(f"Successfully deleted {investigator.name}\n", style="bold green")
+        print(f"Successfully deleted {investigator.name}", style="bold green")
+        print("\n_______________________________________\n", style="light_sky_blue3")
         return False
     elif choice == "U":
         update_investigator(investigator)
@@ -170,8 +177,17 @@ def investigator_details(investigator):
     elif choice == "0":
         exit_program()
     else:
-        print("Invalid Choice\n", style="bold red")
+        print("Invalid Choice", style="bold red")
+        print("\n_______________________________________\n", style="light_sky_blue3")
         return True
+
+
+def investigator_details_menu():
+    print("Type D to delete this investigator")
+    print("Type U to update this investigator")
+    print("Type B to go back")
+    print("Type 0 to exit the program")
+    print("\n_______________________________________\n", style="light_sky_blue3")
 
 
 def list_investigators(investigators):
@@ -188,35 +204,39 @@ def investigators_menu():
     print("Type B to go back")
     print("Type the number of an Investigator to view its details")
     print("Type 0 to exit the program")
-    print("---------------------------")
+    print("\n_______________________________________\n", style="light_sky_blue3")
 
 
-def add_investigator(site, project):
-    name = input("Enter the Investigator's name: ")
-    # if adding an investigator to a site:
-    if site:
-        project_id = input("Enter the Investigator's project id: ")
-        site_id = site.id
-    # if adding an investigator to a project:
+def find_investigator_by_name():
+    name = input("Enter investigator name: ")
+    print("\n")
+    if investigator := Investigator.find_by_name(name):
+        while True:
+            if not investigator_details(investigator):
+                break
+        return True
     else:
-        site_id = input("Enter the Investigator's site id: ")
-        project_id = project.id
+        print(f"No investigator found with the name '{name}'", style="bold red")
+        print("\n_______________________________________\n", style="light_sky_blue3")
+        return True
+
+
+def add_investigator(site=None, project=None):
+    name = input("Enter the Investigator's name: ")
+    project_id = (
+        project.id if project else input("Enter the Investigator's project id: ")
+    )
+    site_id = site.id if site else input("Enter the Investigator's site id: ")
     try:
         investigator = Investigator.create(name, site_id, project_id)
         print(
-            f"Successfully added {name} to this {'Site' if site else 'Project'}'s Investigator's\n",
+            f"Successfully added {name} to this {'Site' if site else 'Project'}'s Investigator's",
             style="bold green",
         )
+        print("\n_______________________________________\n", style="light_sky_blue3")
     except Exception as exc:
-        print("Error creating Investigator: ", exc, "\n", style="bold red")
-
-
-def investigator_details_menu():
-    print("Type D to delete this investigator")
-    print("Type U to update this investigator")
-    print("Type B to go back")
-    print("Type 0 to exit the program")
-    print("---------------------------")
+        print("Error creating Investigator: ", exc, style="bold red")
+        print("\n_______________________________________\n", style="light_sky_blue3")
 
 
 def update_investigator(investigator):
@@ -226,10 +246,12 @@ def update_investigator(investigator):
         investigator.name = input("Enter new name: ")
         investigator.site_id = int(input("Enter new site id: "))
         investigator.project_id = int(input("Enter new project id: "))
-        print("\n")
         investigator.update()
+        print(f"Successfully updated {investigator.name}")
+        print("\n_______________________________________\n", style="light_sky_blue3")
     except Exception as exc:
-        print("Error updating investigator: ", exc, "\n", style="bold red")
+        print("Error updating investigator: ", exc, style="bold red")
+        print("\n_______________________________________\n", style="light_sky_blue3")
 
 
 def site_projects(site):
@@ -244,7 +266,8 @@ def site_projects(site):
     elif choice == "0":
         exit_program()
     else:
-        print("Invalid Choice\n", style="bold red")
+        print("Invalid Choice", style="bold red")
+        print("\n_______________________________________\n", style="light_sky_blue3")
         return True
 
 
@@ -257,12 +280,12 @@ def list_projects(projects):
 def site_projects_menu():
     print("Type B to go back")
     print("Type 0 to exit the program")
-    print("---------------------------")
+    print("\n_______________________________________\n", style="light_sky_blue3")
 
 
 def all_projects():
     projects = Project.get_all()
-    print("All Projects:")
+    print("All Projects:\n")
     list_projects(projects)
     all_projects_menu()
     choice = input("> ")
@@ -281,6 +304,7 @@ def all_projects():
         exit_program()
     else:
         print("Invalid Choice\n", style="bold red")
+        print("\n_______________________________________\n", style="light_sky_blue3")
         return True
 
 
@@ -289,7 +313,7 @@ def all_projects_menu():
     print("Type B to go back to main menu")
     print("Type the number of a Project to view its details")
     print("Type 0 to exit the program")
-    print("---------------------------")
+    print("\n_______________________________________\n", style="light_sky_blue3")
 
 
 def find_project_by_title():
@@ -301,7 +325,8 @@ def find_project_by_title():
                 break
         return True
     else:
-        print(f"No project found with the title '{title}'\n", style="bold red")
+        print(f"No project found with the title '{title}'", style="bold red")
+        print("\n_______________________________________\n", style="light_sky_blue3")
         return True
 
 
@@ -312,9 +337,11 @@ def add_project():
     )
     try:
         project = Project.create(title, funding)
-        print(f"Successfully created {title}\n", style="bold green")
+        print(f"Successfully created {title}", style="bold green")
+        print("\n_______________________________________\n", style="light_sky_blue3")
     except Exception as exc:
-        print("Error creating Project: ", exc, "\n", style="bold red")
+        print("Error creating Project: ", exc, style="bold red")
+        print("\n_______________________________________\n", style="light_sky_blue3")
 
 
 def project_details(project):
@@ -335,14 +362,16 @@ def project_details(project):
         return True
     elif choice == "D":
         project.delete()
-        print(f"Successfully deleted {project.title}\n", style="bold green")
+        print(f"Successfully deleted {project.title}", style="bold green")
+        print("\n_______________________________________\n", style="light_sky_blue3")
         return False
     elif choice == "B":
         return False
     elif choice == "0":
         exit_program()
     else:
-        print("Invalid Choice\n", style="bold red")
+        print("Invalid Choice", style="bold red")
+        print("\n_______________________________________\n", style="light_sky_blue3")
         return True
 
 
@@ -352,7 +381,7 @@ def project_details_menu():
     print("Type [bold cyan]D[/bold cyan] to delete this Project")
     print("Type B to go back")
     print("Type 0 to exit the program")
-    print("---------------------------")
+    print("\n_______________________________________\n", style="light_sky_blue3")
 
 
 def project_sites(project):
@@ -367,5 +396,6 @@ def project_sites(project):
     elif choice == "0":
         exit_program()
     else:
-        print("Invalid Choice\n", style="bold red")
+        print("Invalid Choice", style="bold red")
+        print("\n_______________________________________\n", style="light_sky_blue3")
         return True

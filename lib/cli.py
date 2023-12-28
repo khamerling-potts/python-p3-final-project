@@ -6,11 +6,9 @@ from helpers import (
     all_projects,
     find_site_by_name,
     find_project_by_title,
+    find_investigator_by_name,
 )
 from seed import seed_database
-from colorama import Fore, Back, Style
-
-# from rich import print
 from rich.console import Console
 
 console = Console()
@@ -37,6 +35,8 @@ def main():
             find_site_by_name()
         elif choice == "4":
             find_project_by_title()
+        elif choice == "5":
+            find_investigator_by_name()
         else:
             print("Invalid choice")
 
@@ -49,6 +49,7 @@ def main_menu():
     print("[bold bright_white]2.[/bold bright_white] List all research Projects")
     print("[bold bright_white]3.[/bold bright_white] Find Site by name")
     print("[bold bright_white]4.[/bold bright_white] Find Project by title")
+    print("[bold bright_white]5.[/bold bright_white] Find Investigator by name")
     print("\n_______________________________________\n", style="light_sky_blue3")
 
 
