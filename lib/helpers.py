@@ -2,7 +2,10 @@
 from models.investigator import Investigator
 from models.project import Project
 from models.site import Site
-from colorama import Fore, Back, Style
+from rich.console import Console
+
+console = Console()
+print = console.print
 
 
 def exit_program():
@@ -12,7 +15,7 @@ def exit_program():
 
 def all_sites():
     sites = Site.get_all()
-    print("All Research Sites:")
+    print("All Research Sites:\n")
     list_sites(sites)
     all_sites_menu()
     choice = input("> ")
@@ -24,23 +27,31 @@ def all_sites():
         return False
     elif choice.isdigit() and int(choice) in range(1, len(Site.get_all()) + 1):
         while True:
-            # change this to site parameter and not id parameter
-            if not site_details(int(choice) - 1):
+            if not site_details(sites[int(choice) - 1]):
                 break
         return True
     elif choice == "0":
         exit_program()
     else:
-        print("Invalid choice")
-        print("\n")
+        print("Invalid choice\n", style="bold red")
         return True
 
 
-# add delete option here
-def site_details(index):
-    site = Site.get_all()[index]
-    print(f"{site.name}: {site.classification} institution located in {site.city}")
+def find_site_by_name():
+    name = input("Enter site name: ")
     print("\n")
+    if site := Site.find_by_name(name):
+        while True:
+            if not site_details(site):
+                break
+        return True
+    else:
+        print(f"No site found with the name '{name}'\n", style="bold red")
+        return True
+
+
+def site_details(site):
+    print(f"{site.name}: {site.classification} institution located in {site.city}\n")
     site_details_menu()
     choice = input("> ")
     print("\n")
@@ -54,33 +65,37 @@ def site_details(index):
             if not site_projects(site):
                 break
         return True
+    elif choice == "D":
+        site.delete()
+        print(f"Successfully deleted {site.name}\n", style="bold green")
+        return False
     elif choice == "B":
         return False
     elif choice == "0":
         exit_program()
     else:
-        print("Invalid Choice")
+        print("Invalid Choice\n", style="bold red")
         return True
 
 
 def list_sites(sites):
     for i in range(len(sites)):
-        print(f"{i+1}. {sites[i].name} (id: {sites[i].id})")
+        print(f"[bold bright_white]{i+1}.[/bold bright_white] {sites[i].name}")
     print("\n")
 
 
 def project_sites_menu():
-    print("Type B to go back")
+    print("Type [bold cyan]B[/bold cyan] to go back")
     print("Type 0 to exit the program")
-    print("---------------------------")
+    print("\n_______________________________________\n", style="light_sky_blue3")
 
 
 def all_sites_menu():
-    print("Type A to add a new Site")
-    print("Type B to go back to main menu")
-    print("Type the number of a Site to view its details")
+    print("Type [bold cyan]A[/bold cyan] to add a new Site")
+    print("Type [bold cyan]B[/bold cyan] to go back to main menu")
+    print("Type the [bold cyan]number of a Site[/bold cyan] to view its details")
     print("Type 0 to exit the program")
-    print("---------------------------")
+    print("\n_______________________________________\n", style="light_sky_blue3")
 
 
 def add_site():
@@ -91,15 +106,15 @@ def add_site():
     )
     try:
         site = Site.create(name, city, classification)
+        print(f"Successfully created {name}\n", style="bold green")
     except Exception as exc:
-        print("Error creating Site: ", exc)
-    print("\n")
+        print("Error creating Site: ", exc, "\n", style="bold red")
 
 
-# add delete option here
 def site_details_menu():
     print("Type I to view and edit this Site's Investigators")
     print("Type P to view the Projects associated with this Site")
+    print("Type [bold cyan]D[/bold cyan] to delete this Site")
     print("Type B to go back")
     print("Type 0 to exit the program")
     print("---------------------------")
@@ -108,10 +123,10 @@ def site_details_menu():
 def investigators(site=None, project=None):
     if site:
         investigators = site.investigators()
-        print(f"{site.name} Investigators:")
+        print(f"{site.name} Investigators:\n")
     else:
         investigators = project.investigators()
-        print(f"Project '{project.title}' Investigators")
+        print(f"'{project.title}' Investigators\n")
 
     list_investigators(investigators)
     investigators_menu()
@@ -131,7 +146,7 @@ def investigators(site=None, project=None):
     elif choice == "0":
         exit_program()
     else:
-        print("Invalid choice")
+        print("Invalid Choice\n", style="bold red")
         return True
 
 
@@ -145,6 +160,7 @@ def investigator_details(investigator):
     print("\n")
     if choice == "D":
         investigator.delete()
+        print(f"Successfully deleted {investigator.name}\n", style="bold green")
         return False
     elif choice == "U":
         update_investigator(investigator)
@@ -154,13 +170,16 @@ def investigator_details(investigator):
     elif choice == "0":
         exit_program()
     else:
-        print("Invalid Choice")
+        print("Invalid Choice\n", style="bold red")
         return True
 
 
 def list_investigators(investigators):
-    for i in range(len(investigators)):
-        print(f"{i+1}. {investigators[i].name}")
+    if investigators:
+        for i in range(len(investigators)):
+            print(f"{i+1}. {investigators[i].name}")
+    else:
+        print("None")
     print("\n")
 
 
@@ -182,16 +201,14 @@ def add_investigator(site, project):
     else:
         site_id = input("Enter the Investigator's site id: ")
         project_id = project.id
-
     try:
         investigator = Investigator.create(name, site_id, project_id)
         print(
-            f"Successfully added {name} to this {'Site' if site else 'Project'}'s Investigator's"
+            f"Successfully added {name} to this {'Site' if site else 'Project'}'s Investigator's\n",
+            style="bold green",
         )
-        print("\n")
     except Exception as exc:
-        print("Error creating Investigator: ", exc)
-        print("\n")
+        print("Error creating Investigator: ", exc, "\n", style="bold red")
 
 
 def investigator_details_menu():
@@ -212,13 +229,12 @@ def update_investigator(investigator):
         print("\n")
         investigator.update()
     except Exception as exc:
-        print("Error updating investigator: ", exc)
-        print("\n")
+        print("Error updating investigator: ", exc, "\n", style="bold red")
 
 
 def site_projects(site):
     projects = site.projects()
-    print(f"{site.name} Projects:")
+    print(f"{site.name} Projects:\n")
     list_projects(projects)
     site_projects_menu()
     choice = input("> ")
@@ -228,13 +244,13 @@ def site_projects(site):
     elif choice == "0":
         exit_program()
     else:
-        print("Invalid choice")
+        print("Invalid Choice\n", style="bold red")
         return True
 
 
 def list_projects(projects):
     for i in range(len(projects)):
-        print(f"{i+1}. {projects[i].title} (id: {projects[i].id})")
+        print(f"{i+1}. {projects[i].title}")
     print("\n")
 
 
@@ -261,6 +277,11 @@ def all_projects():
             if not project_details(projects[int(choice) - 1]):
                 break
         return True
+    elif choice == "0":
+        exit_program()
+    else:
+        print("Invalid Choice\n", style="bold red")
+        return True
 
 
 def all_projects_menu():
@@ -271,6 +292,19 @@ def all_projects_menu():
     print("---------------------------")
 
 
+def find_project_by_title():
+    title = input("Enter project title: ")
+    print("\n")
+    if project := Project.find_by_title(title):
+        while True:
+            if not project_details(project):
+                break
+        return True
+    else:
+        print(f"No project found with the title '{title}'\n", style="bold red")
+        return True
+
+
 def add_project():
     title = input("Enter the Project's title: ")
     funding = input(
@@ -278,12 +312,11 @@ def add_project():
     )
     try:
         project = Project.create(title, funding)
+        print(f"Successfully created {title}\n", style="bold green")
     except Exception as exc:
-        print("Error creating Project: ", exc)
-    print("\n")
+        print("Error creating Project: ", exc, "\n", style="bold red")
 
 
-# add delete option here
 def project_details(project):
     print(f"{project.title}: ${project.funding} in funding (id: {project.id})")
     print("\n")
@@ -300,19 +333,23 @@ def project_details(project):
             if not project_sites(project):
                 break
         return True
+    elif choice == "D":
+        project.delete()
+        print(f"Successfully deleted {project.title}\n", style="bold green")
+        return False
     elif choice == "B":
         return False
     elif choice == "0":
         exit_program()
     else:
-        print("Invalid Choice")
+        print("Invalid Choice\n", style="bold red")
         return True
 
 
-# add delete option here
 def project_details_menu():
     print("Type I to view and edit this Project's Investigators")
     print("Type S to view the Sites associated with this Project")
+    print("Type [bold cyan]D[/bold cyan] to delete this Project")
     print("Type B to go back")
     print("Type 0 to exit the program")
     print("---------------------------")
@@ -320,7 +357,7 @@ def project_details_menu():
 
 def project_sites(project):
     sites = project.sites()
-    print(f"'{project.title}' Sites:")
+    print(f"'{project.title}' Sites:\n")
     list_sites(sites)
     project_sites_menu()
     choice = input("> ")
@@ -330,5 +367,5 @@ def project_sites(project):
     elif choice == "0":
         exit_program()
     else:
-        print("Invalid choice")
+        print("Invalid Choice\n", style="bold red")
         return True

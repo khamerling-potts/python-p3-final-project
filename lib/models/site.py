@@ -37,7 +37,7 @@ class Site:
         if isinstance(city, str) and not city.isdigit() and len(city) > 1:
             self._city = city
         else:
-            raise Exception("Site's name must be a string at least 2 characters long.")
+            raise Exception("Site's city must be a string at least 2 characters long.")
 
     @property
     def classification(self):
@@ -51,7 +51,6 @@ class Site:
         if classification in options:
             self._classification = classification
         else:
-            print(classification)
             raise Exception(
                 "Site's classification must be one of the following strings: 'Government', 'Academic', 'Medical'"
             )
