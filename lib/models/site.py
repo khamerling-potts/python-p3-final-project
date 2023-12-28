@@ -21,7 +21,7 @@ class Site:
 
     @name.setter
     def name(self, name):
-        if isinstance(name, str) and len(name) > 1:
+        if isinstance(name, str) and not name.isdigit() and len(name) > 1:
             self._name = name
         else:
             raise Exception(
@@ -34,7 +34,7 @@ class Site:
 
     @city.setter
     def city(self, city):
-        if isinstance(city, str) and len(city) > 1:
+        if isinstance(city, str) and not city.isdigit() and len(city) > 1:
             self._city = city
         else:
             raise Exception("Site's name must be a string at least 2 characters long.")

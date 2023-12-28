@@ -23,7 +23,7 @@ class Investigator:
 
     @name.setter
     def name(self, name):
-        if isinstance(name, str) and len(name) > 1:
+        if isinstance(name, str) and not name.isdigit() and len(name) > 1:
             self._name = name
         else:
             raise Exception(
@@ -36,6 +36,8 @@ class Investigator:
 
     @site_id.setter
     def site_id(self, site_id):
+        if isinstance(site_id, str) and site_id.isdigit():
+            site_id = int(site_id)
         if isinstance(site_id, int) and Site.find_by_id(site_id):
             self._site_id = site_id
         else:
@@ -49,10 +51,11 @@ class Investigator:
 
     @project_id.setter
     def project_id(self, project_id):
+        if isinstance(project_id, str) and project_id.isdigit():
+            project_id = int(project_id)
         if isinstance(project_id, int) and Project.find_by_id(project_id):
             self._project_id = project_id
         else:
-            print(project_id)
             raise Exception(
                 "An investigator's project_id must be an integer that references a project in the database"
             )

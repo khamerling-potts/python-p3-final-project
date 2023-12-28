@@ -21,7 +21,7 @@ class Project:
 
     @title.setter
     def title(self, title):
-        if isinstance(title, str) and len(title) > 2:
+        if isinstance(title, str) and not title.isdigit() and len(title) > 2:
             self._title = title
         else:
             raise Exception(
@@ -34,6 +34,9 @@ class Project:
 
     @funding.setter
     def funding(self, funding):
+        # Accounts for user input which comes in as a string, as well as seeded data which comes in as an int
+        if isinstance(funding, str) and funding.isdigit():
+            funding = int(funding)
         if isinstance(funding, int) and (funding >= 1000 or funding == 0):
             self._funding = funding
         else:
@@ -132,4 +135,5 @@ class Project:
             WHERE investigators.project_id = ?
         """
         rows = CURSOR.execute(sql, (self.id,)).fetchall()
-        return [Site.instance_from_db(row) for row in rows]
+        sites = [Site.instance_from_db(row) for row in rows]
+        return list(set(sites))
