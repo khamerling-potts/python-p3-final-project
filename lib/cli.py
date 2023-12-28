@@ -1,6 +1,13 @@
 # lib/cli.py
 
-from helpers import exit_program, list_sites, add_site, sites_menu, sites, all_projects
+from helpers import (
+    exit_program,
+    list_sites,
+    add_site,
+    all_sites_menu,
+    all_sites,
+    all_projects,
+)
 from seed import seed_database
 
 
@@ -14,7 +21,7 @@ def main():
             exit_program()
         elif choice == "1":
             while True:
-                if not sites():
+                if not all_sites():
                     break
         elif choice == "2":
             while True:

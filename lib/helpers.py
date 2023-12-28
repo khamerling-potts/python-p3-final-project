@@ -9,9 +9,11 @@ def exit_program():
     exit()
 
 
-def sites():
-    list_sites()
-    sites_menu()
+def all_sites():
+    sites = Site.get_all()
+    print("All Research Sites:")
+    list_sites(sites)
+    all_sites_menu()
     choice = input("> ")
     if choice == "A":
         add_site()
@@ -59,15 +61,19 @@ def site_details(index):
         return True
 
 
-def list_sites():
-    sites = Site.get_all()
-    print("Research Sites:")
+def list_sites(sites):
     for i in range(len(sites)):
         print(f"{i+1}. {sites[i].name} (id: {sites[i].id})")
     print("\n")
 
 
-def sites_menu():
+def project_sites_menu():
+    print("Type B to go back")
+    print("Type 0 to exit the program")
+    print("---------------------------")
+
+
+def all_sites_menu():
     print("Type A to add a new Site")
     print("Type B to go back to main menu")
     print("Type the number of a Site to view its details")
@@ -284,11 +290,11 @@ def project_details(project):
             if not investigators(project=project):
                 break
         return True
-    # elif choice == "P":
-    #     while True:
-    #         if not site_projects(site):
-    #             break
-    #     return True
+    elif choice == "S":
+        while True:
+            if not project_sites(project):
+                break
+        return True
     elif choice == "B":
         return False
     elif choice == "0":
@@ -305,3 +311,18 @@ def project_details_menu():
     print("Type B to go back")
     print("Type 0 to exit the program")
     print("---------------------------")
+
+
+def project_sites(project):
+    sites = project.sites()
+    print(f"'{project.title}' Sites:")
+    list_sites(sites)
+    project_sites_menu()
+    choice = input("> ")
+    if choice == "B":
+        return False
+    elif choice == "0":
+        exit_program()
+    else:
+        print("Invalid choice")
+        return True
