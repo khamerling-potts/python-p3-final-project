@@ -9,7 +9,7 @@ rprint = console.print
 
 
 def exit_program():
-    rprint("Goodbye!")
+    rprint("Thank you for using RDM\n", style="bold light_slate_grey")
     exit()
 
 
@@ -49,7 +49,7 @@ def find_site_by_name():
         rprint(f"No site found with the name '{name}'", style="bold red")
         rprint(
             "\n----------------------------------------------------------------\n",
-            style="light_sky_blue3",
+            style="light_slate_grey",
         )
         return True
 
@@ -78,7 +78,7 @@ def site_details(site):
         rprint(f"Successfully deleted {site.name}", style="bold green")
         rprint(
             "\n----------------------------------------------------------------\n",
-            style="light_sky_blue3",
+            style="light_slate_grey",
         )
         return False
     elif choice == "B":
@@ -89,7 +89,7 @@ def site_details(site):
         rprint("Invalid Choice", style="bold red")
         rprint(
             "\n----------------------------------------------------------------\n",
-            style="light_sky_blue3",
+            style="light_slate_grey",
         )
         return True
 
@@ -108,7 +108,7 @@ def project_sites_menu():
     rprint("Type 0 to exit the program")
     rprint(
         "\n----------------------------------------------------------------\n",
-        style="light_sky_blue3",
+        style="light_slate_grey",
     )
 
 
@@ -119,7 +119,7 @@ def all_sites_menu():
     rprint("Type 0 to exit the program")
     rprint(
         "\n----------------------------------------------------------------\n",
-        style="light_sky_blue3",
+        style="light_slate_grey",
     )
 
 
@@ -134,14 +134,14 @@ def add_site():
         rprint(f"Successfully created {name}", style="bold green")
         rprint(
             "\n----------------------------------------------------------------\n",
-            style="light_sky_blue3",
+            style="light_slate_grey",
         )
 
     except Exception as exc:
         rprint("Error creating Site: ", exc, style="bold red")
         rprint(
             "\n----------------------------------------------------------------\n",
-            style="light_sky_blue3",
+            style="light_slate_grey",
         )
 
 
@@ -155,12 +155,15 @@ def site_details_menu():
     rprint("Type 0 to exit the program")
     rprint(
         "\n----------------------------------------------------------------\n",
-        style="light_sky_blue3",
+        style="light_slate_grey",
     )
 
 
 def investigators(site=None, project=None):
-    if site:
+    if not site and not project:
+        investigators = Investigator.get_all()
+        rprint("All Investigators:", style="u")
+    elif site:
         investigators = site.investigators()
         rprint(f"{site.name} Investigators:\n", style="u")
     else:
@@ -188,7 +191,7 @@ def investigators(site=None, project=None):
         rprint("Invalid Choice", style="bold red")
         rprint(
             "\n----------------------------------------------------------------\n",
-            style="light_sky_blue3",
+            style="light_slate_grey",
         )
         return True
 
@@ -206,7 +209,7 @@ def investigator_details(investigator):
         rprint(f"Successfully deleted {investigator.name}", style="bold green")
         rprint(
             "\n----------------------------------------------------------------\n",
-            style="light_sky_blue3",
+            style="light_slate_grey",
         )
         return False
     elif choice == "U":
@@ -220,7 +223,7 @@ def investigator_details(investigator):
         rprint("Invalid Choice", style="bold red")
         rprint(
             "\n----------------------------------------------------------------\n",
-            style="light_sky_blue3",
+            style="light_slate_grey",
         )
         return True
 
@@ -232,7 +235,7 @@ def investigator_details_menu():
     rprint("Type 0 to exit the program")
     rprint(
         "\n----------------------------------------------------------------\n",
-        style="light_sky_blue3",
+        style="light_slate_grey",
     )
 
 
@@ -254,7 +257,7 @@ def investigators_menu():
     rprint("Type 0 to exit the program")
     rprint(
         "\n----------------------------------------------------------------\n",
-        style="light_sky_blue3",
+        style="light_slate_grey",
     )
 
 
@@ -270,7 +273,7 @@ def find_investigator_by_name():
         rprint(f"No investigator found with the name '{name}'", style="bold red")
         rprint(
             "\n----------------------------------------------------------------\n",
-            style="light_sky_blue3",
+            style="light_slate_grey",
         )
         return True
 
@@ -289,18 +292,17 @@ def add_investigator(site=None, project=None):
         )
         rprint(
             "\n----------------------------------------------------------------\n",
-            style="light_sky_blue3",
+            style="light_slate_grey",
         )
     except Exception as exc:
         rprint("Error creating Investigator: ", exc, style="bold red")
         rprint(
             "\n----------------------------------------------------------------\n",
-            style="light_sky_blue3",
+            style="light_slate_grey",
         )
 
 
 def update_investigator(investigator):
-    id = investigator.id
     try:
         # consider replacing project id with project name
         investigator.name = input("Enter new name: ")
@@ -310,13 +312,13 @@ def update_investigator(investigator):
         rprint(f"Successfully updated {investigator.name}", style="bold green")
         rprint(
             "\n----------------------------------------------------------------\n",
-            style="light_sky_blue3",
+            style="light_slate_grey",
         )
     except Exception as exc:
         rprint("Error updating investigator: ", exc, style="bold red")
         rprint(
             "\n----------------------------------------------------------------\n",
-            style="light_sky_blue3",
+            style="light_slate_grey",
         )
 
 
@@ -335,7 +337,7 @@ def site_projects(site):
         rprint("Invalid Choice", style="bold red")
         rprint(
             "\n----------------------------------------------------------------\n",
-            style="light_sky_blue3",
+            style="light_slate_grey",
         )
         return True
 
@@ -354,7 +356,7 @@ def site_projects_menu():
     rprint("Type 0 to exit the program")
     rprint(
         "\n----------------------------------------------------------------\n",
-        style="light_sky_blue3",
+        style="light_slate_grey",
     )
 
 
@@ -381,7 +383,7 @@ def all_projects():
         rprint("Invalid Choice\n", style="bold red")
         rprint(
             "\n----------------------------------------------------------------\n",
-            style="light_sky_blue3",
+            style="light_slate_grey",
         )
         return True
 
@@ -393,7 +395,7 @@ def all_projects_menu():
     rprint("Type 0 to exit the program")
     rprint(
         "\n----------------------------------------------------------------\n",
-        style="light_sky_blue3",
+        style="light_slate_grey",
     )
 
 
@@ -409,7 +411,7 @@ def find_project_by_title():
         rprint(f"No project found with the title '{title}'", style="bold red")
         rprint(
             "\n----------------------------------------------------------------\n",
-            style="light_sky_blue3",
+            style="light_slate_grey",
         )
         return True
 
@@ -424,13 +426,13 @@ def add_project():
         rprint(f"Successfully created {title}", style="bold green")
         rprint(
             "\n----------------------------------------------------------------\n",
-            style="light_sky_blue3",
+            style="light_slate_grey",
         )
     except Exception as exc:
         rprint("Error creating Project: ", exc, style="bold red")
         rprint(
             "\n----------------------------------------------------------------\n",
-            style="light_sky_blue3",
+            style="light_slate_grey",
         )
 
 
@@ -458,7 +460,7 @@ def project_details(project):
         rprint(f"Successfully deleted {project.title}", style="bold green")
         rprint(
             "\n----------------------------------------------------------------\n",
-            style="light_sky_blue3",
+            style="light_slate_grey",
         )
         return False
     elif choice == "B":
@@ -469,7 +471,7 @@ def project_details(project):
         rprint("Invalid Choice", style="bold red")
         rprint(
             "\n----------------------------------------------------------------\n",
-            style="light_sky_blue3",
+            style="light_slate_grey",
         )
         return True
 
@@ -486,7 +488,7 @@ def project_details_menu():
     rprint("Type 0 to exit the program")
     rprint(
         "\n----------------------------------------------------------------\n",
-        style="light_sky_blue3",
+        style="light_slate_grey",
     )
 
 
@@ -505,6 +507,6 @@ def project_sites(project):
         rprint("Invalid Choice", style="bold red")
         rprint(
             "\n----------------------------------------------------------------\n",
-            style="light_sky_blue3",
+            style="light_slate_grey",
         )
         return True

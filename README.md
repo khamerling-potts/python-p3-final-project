@@ -1,172 +1,73 @@
-# Phase 3 CLI+ORM Project Template
+# Phase 3 Project - RDM
 
-## Learning Goals
+## Overview
 
-- Discuss the basic directory structure of a CLI.
-- Outline the first steps in building a CLI.
+<img src="main_menu.png" width="35%" height="auto" />
 
----
+RDM (research database manager.) is a command line application that allows users to manage research sites, projects, and investigators. This project was inspired by my prior experience working in academic, government, and medical settings to conduct psychological research. Both research sites and projects
+can include many investigators, but an investigator may only work on one project at one site.
 
-## Introduction
-
-You now have a basic idea of what constitutes a CLI. Fork and clone this lesson
-for a project template for your CLI.
-
-Take a look at the directory structure:
-
-```console
-.
-├── Pipfile
-├── Pipfile.lock
-├── README.md
-└── lib
-    ├── models
-    │   ├── __init__.py
-    │   └── model_1.py
-    ├── cli.py
-    ├── debug.py
-    └── helpers.py
-```
-
-Note: The directory also includes two files named `CONTRIBUTING.md` and
-`LICENSE.md` that are specific to Flatiron's curriculum. You can disregard or
-delete the files if you want.
+You can run the file `cli.py` to start up the CLI. This file first seeds the database with some sample data, but users are able to modify this data while using the application.
 
 ---
 
-## Generating Your Environment
+## Command Line Menus
 
-You might have noticed in the file structure- there's already a Pipfile!
+Users have the ability to view and search through all 3 models (Sites, Projects, Investigators) from the main menu of the application.
 
-Install any additional dependencies you know you'll need for your project by
-adding them to the `Pipfile`. Then run the commands:
+#
 
-```console
-pipenv install
-pipenv shell
-```
+### Sites
 
----
+Below demonstrates the two ways in which a user can begin looking through the research sites from the main menu: 1. Listing all sites, or 2. Searching for a particular site by name. If viewing all sites, you may also create a new site with the name, classification, and city of your choosing.
 
-## Generating Your CLI
+<p>
+  <img src="sites_1.png" width='30%'/>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  <img src="sites_2.png" width='30%'/> 
+</p>
 
-A CLI is, simply put, an interactive script and prompts the user and performs
-operations based on user input.
+Once on a site, users can view and edit its investigators, delete the site, or view the titles of its associated projects as a bonus. Sites and Projects have a many to many relationship through Investigators. Many projects can be worked on at one site, and many sites can collaborate on one project.
 
-The project template has a sample CLI in `lib/cli.py` that looks like this:
+<!--
+<p>
+  <img src="site_investigators.png" width='30%'/>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  <img src="site_projects.png" width='30%'/>
+</p> -->
 
-```py
-# lib/cli.py
+#
 
-from helpers import (
-    exit_program,
-    helper_1
-)
+### Projects
 
+Similar to sites, users can look through projects from the main menu by selecting from all projects or searching by title directly:
 
-def main():
-    while True:
-        menu()
-        choice = input("> ")
-        if choice == "0":
-            exit_program()
-        elif choice == "1":
-            helper_1()
-        else:
-            print("Invalid choice")
+<p>
+  <img src="projects_1.png" width='30%'/>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  <img src="projects_2.png" width='30%'/> 
+</p>
 
+Projects have the same menu options as sites where a user can view/edit its investigators, delete projects, or view the names of its sites.
 
-def menu():
-    print("Please select an option:")
-    print("0. Exit the program")
-    print("1. Some useful function")
+#
 
+### Investigators
 
-if __name__ == "__main__":
-    main()
-```
+Lastly from the main menu, users can view all investigators and select from the list or search by name directly.
 
-The helper functions are located in `lib/helpers.py`:
+<p>
+  <img src="investigators_1.png" width='30%'/>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  <img src="investigators_2.png" width='30%'/> 
+</p>
 
-```py
-# lib/helpers.py
+If you were to select an investigator from within a site or project, it brings you to the same investigator page.
 
-def helper_1():
-    print("Performing useful function#1.")
+**From a Site:**                                                                                          **From a Project:**
 
-
-def exit_program():
-    print("Goodbye!")
-    exit()
-```
-
-You can run the template CLI with `python lib/cli.py`, or include the shebang
-and make it executable with `chmod +x`. The template CLI will ask for input, do
-some work, and accomplish some sort of task.
-
-Past that, CLIs can be whatever you'd like, as long as you follow the project
-requirements.
-
-Of course, you will update `lib/cli.py` with prompts that are appropriate for
-your application, and you will update `lib/helpers.py` to replace `helper_1()`
-with a useful function based on the specific problem domain you decide to
-implement, along with adding other helper functions to the module.
-
-In the `lib/models` folder, you should rename `model_1.py` with the name of a
-data model class from your specific problem domain, and add other classes to the
-folder as needed. The file `lib/models/__init__.py` has been initialized to
-create the necessary database constants. You need to add import statements to
-the various data model classes in order to use the database constants.
-
-You are also welcome to implement a different module and directory structure.
-However, your project should be well organized, modular, and follow the design
-principal of separation of concerns, which means you should separate code
-related to:
-
-- User interface
-- Data persistence
-- Problem domain rules and logic
-
----
-
-## Updating README.md
-
-`README.md` is a Markdown file that should describe your project. You will
-replace the contents of this `README.md` file with a description of **your**
-actual project.
-
-Markdown is not a language that we cover in Flatiron's Software Engineering
-curriculum, but it's not a particularly difficult language to learn (if you've
-ever left a comment on Reddit, you might already know the basics). Refer to the
-cheat sheet in this assignments's resources for a basic guide to Markdown.
-
-### What Goes into a README?
-
-This README serves as a template. Replace the contents of this file to describe
-the important files in your project and describe what they do. Each Python file
-that you edit should get at least a paragraph, and each function should be
-described with a sentence or two.
-
-Describe your actual CLI script first, and with a good level of detail. The rest
-should be ordered by importance to the user. (Probably functions next, then
-models.)
-
-Screenshots and links to resources that you used throughout are also useful to
-users and collaborators, but a little more syntactically complicated. Only add
-these in if you're feeling comfortable with Markdown.
-
----
-
-## Conclusion
-
-A lot of work goes into a good CLI, but it all relies on concepts that you've
-practiced quite a bit by now. Hopefully this template and guide will get you off
-to a good start with your Phase 3 Project.
-
-Happy coding!
-
----
-
-## Resources
-
-- [Markdown Cheat Sheet](https://www.markdownguide.org/cheat-sheet/)
+<p>
+  <img src="site_investigator.png" width='30%'/>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  <img src="project_investigator.png" width='30%'/> 
+</p>
