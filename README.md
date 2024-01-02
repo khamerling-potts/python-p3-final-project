@@ -10,6 +10,10 @@ RDM (research database manager.) is a command line application that allows users
 
 You can run the file `cli.py` to start up the CLI. This file first seeds the database with sample data, then allows users to navigate the project.
 
+## Demo
+
+[Here](https://www.youtube.com/watch?v=JrtR0XUZG3Y) is a video demonstrating the usage of RDM.
+
 ## Command Line Menus
 
 Users have the ability to view and search through all 3 models (Sites, Projects, Investigators) from the main menu of the application.
@@ -121,3 +125,25 @@ While viewing an investigator, you can delete them or update their site, project
 --
 
 `projects_sites_menu()` displays a menu of options when viewing the Sites/Projects many-to-many relationship (projects associated with a site or sites associated with a project).
+
+## Models
+
+Behind the scenes, this project is using 3 classes/models to manage the functionality of and relationships between sites, investigators, and projects. The models have many of the same methods.
+
+### Site
+
+`sites.py` contains the `Site` class which is responsible for the functionality of all `Site` objects. It includes the properties `name`, `city`, and `classification` which are validated whenever updated. It also includes methods to create and drop the 'sites' table, create a `Site`, update a `Site`, delete a `Site`, get all `Sites`s, find a `Site` by name or id, and display its investigators or projects. It also includes a method to create a `Site` from a row of the database (for use in other methods).
+
+Here is an example of a `Site` printed: "Site 1: James J. Peters VA | Bronx | Government institution"
+
+### Investigator
+
+`investigators.py` contains the `Investigator` class which is responsible for the functionality of all `Investigator` objects. It includes the properties `name`, `site_id`, and `project_id` which are validated whenever updated. It also includes methods to create and drop the 'investigators' table, create an `Investigator`, update an `Investigator`, delete an `Investigator`, get all `Investigator`s, and find an `Investigator` by name or id. It also includes a method to create an `Investigator` from a row of the database (for use in other methods).
+
+Here is an example of an `Investigator` printed: "Investigator 1: Jack Taylor | Site 4 | Project 3"
+
+### Project
+
+`projects.py` contains the `Project` class which is responsible for the functionality of all `Project` objects. It includes the properties `title` and `funding` which are validated whenever updated. It also includes methods to create and drop the 'projects' table, create a `Project`, update a `Project`, delete a `Project`, get all `Project`s, find a `Project` by name or id, and display its investigators or sites. It also includes a method to create a `Project` from a row of the database (for use in other methods).
+
+Here is an example of a `Project` printed: "Project 1: Predicting Depression in Long COVID Patients | $100000 in funding"
