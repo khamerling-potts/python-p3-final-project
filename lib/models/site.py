@@ -1,7 +1,5 @@
 from models.__init__ import CONN, CURSOR
 
-# from models.project import Project
-
 
 class Site:
     all = {}
@@ -43,8 +41,6 @@ class Site:
     def classification(self):
         return self._classification
 
-    # make case insensitive
-    # WORKING :)
     @classification.setter
     def classification(self, classification):
         options = ["Government", "Academic", "Medical"]
@@ -55,7 +51,6 @@ class Site:
                 "Site's classification must be one of the following strings: 'Government', 'Academic', 'Medical'"
             )
 
-    # WORKING :)
     @classmethod
     def create_table(cls):
         sql = """
@@ -68,7 +63,6 @@ class Site:
         CURSOR.execute(sql)
         CONN.commit()
 
-    # WORKING :)
     @classmethod
     def drop_table(cls):
         sql = """
@@ -77,7 +71,6 @@ class Site:
         CURSOR.execute(sql)
         CONN.commit()
 
-    # WORKING :)
     @classmethod
     def create(cls, name, city, classification):
         site = cls(name, city, classification)
@@ -91,7 +84,6 @@ class Site:
         cls.all[site.id] = site
         return site
 
-    # WORKING :)
     def update(self):
         sql = """
             UPDATE sites
@@ -101,7 +93,6 @@ class Site:
         CURSOR.execute(sql, (self.name, self.city, self.classification, self.id))
         CONN.commit()
 
-    # WORKING :)
     def delete(self):
         for investigator in self.investigators():
             investigator.delete()
@@ -111,7 +102,6 @@ class Site:
         del type(self).all[self.id]
         self.id = None
 
-    # WORKING :)
     @classmethod
     def instance_from_db(cls, row):
         if site := cls.all.get(row[0]):
@@ -123,21 +113,18 @@ class Site:
             cls.all[site.id] = site
         return site
 
-    # WORKING :)
     @classmethod
     def get_all(cls):
         sql = """SELECT * FROM sites"""
         rows = CURSOR.execute(sql).fetchall()
         return [cls.instance_from_db(row) for row in rows]
 
-    # WORKING :)
     @classmethod
     def find_by_id(cls, id):
         all_sites = cls.get_all()
         filtered = list(filter(lambda instance: instance.id == id, all_sites))
         return filtered[0] if len(filtered) else None
 
-    # WORKING :)
     @classmethod
     def find_by_name(cls, name):
         all_sites = cls.get_all()

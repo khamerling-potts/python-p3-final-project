@@ -7,7 +7,6 @@ from models.project import Project
 class Investigator:
     all = {}
 
-    # make project id required after implementing project model
     def __init__(self, name, site_id, project_id, id=None):
         self.id = id
         self.name = name

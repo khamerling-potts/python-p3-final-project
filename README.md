@@ -82,7 +82,7 @@ While viewing an investigator, you can delete them or update their site, project
 
 `add_site()` prompts the user for site details and creates a new site in the database.
 
-`find_site_by_name()` prompts the user for a name and calls a class method to searh the database for that site.
+`find_site_by_name()` prompts the user for a name and calls a class method to search the database for that site.
 
 `site_projects(site)` calls helper functions to display a menu of options and print the projects associated with the given site. Prompts the user for follow-up input.
 
@@ -102,7 +102,7 @@ While viewing an investigator, you can delete them or update their site, project
 
 `update_investigator(investigator)` prompts the user for new investigator details and persists those changes to the database.
 
-`find_investigator_by_name()` prompts the user for a name and calls a class method to searh the database for that investigator.
+`find_investigator_by_name()` prompts the user for a name and calls a class method to search the database for that investigator.
 
 --
 
