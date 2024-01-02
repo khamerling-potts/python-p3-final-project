@@ -13,6 +13,9 @@ def exit_program():
     exit()
 
 
+### SITES ###
+
+
 def all_sites():
     sites = Site.get_all()
     rprint("All Research Sites:\n", style="u")
@@ -150,13 +153,27 @@ def find_site_by_name():
         return True
 
 
-def project_sites_menu():
-    rprint("Type [bold cyan]B[/bold cyan] to go back")
-    rprint("Type 0 to exit the program")
-    rprint(
-        "\n----------------------------------------------------------------\n",
-        style="light_slate_grey",
-    )
+def site_projects(site):
+    projects = site.projects()
+    rprint(f"{site.name} Projects:\n", style="u")
+    list_projects(projects)
+    projects_sites_menu()
+    choice = input("> ")
+    rprint("\n")
+    if choice == "B":
+        return False
+    elif choice == "0":
+        exit_program()
+    else:
+        rprint("Invalid Choice", style="bold red")
+        rprint(
+            "\n----------------------------------------------------------------\n",
+            style="light_slate_grey",
+        )
+        return True
+
+
+### INVESTIGATORS ###
 
 
 def investigators(site=None, project=None):
@@ -328,42 +345,7 @@ def find_investigator_by_name():
         return True
 
 
-def site_projects(site):
-    projects = site.projects()
-    rprint(f"{site.name} Projects:\n", style="u")
-    list_projects(projects)
-    site_projects_menu()
-    choice = input("> ")
-    rprint("\n")
-    if choice == "B":
-        return False
-    elif choice == "0":
-        exit_program()
-    else:
-        rprint("Invalid Choice", style="bold red")
-        rprint(
-            "\n----------------------------------------------------------------\n",
-            style="light_slate_grey",
-        )
-        return True
-
-
-def list_projects(projects):
-    if projects:
-        for i in range(len(projects)):
-            rprint(f"{i+1}. {projects[i].title}")
-    else:
-        rprint("None")
-    rprint("\n")
-
-
-def site_projects_menu():
-    rprint("Type [bold cyan]B[/bold cyan] to go back")
-    rprint("Type 0 to exit the program")
-    rprint(
-        "\n----------------------------------------------------------------\n",
-        style="light_slate_grey",
-    )
+### PROJECTS ###
 
 
 def all_projects():
@@ -403,43 +385,6 @@ def all_projects_menu():
         "\n----------------------------------------------------------------\n",
         style="light_slate_grey",
     )
-
-
-def find_project_by_title():
-    title = input("Enter project title: ")
-    rprint("\n")
-    if project := Project.find_by_title(title):
-        while True:
-            if not project_details(project):
-                break
-        return True
-    else:
-        rprint(f"No project found with the title '{title}'", style="bold red")
-        rprint(
-            "\n----------------------------------------------------------------\n",
-            style="light_slate_grey",
-        )
-        return True
-
-
-def add_project():
-    title = input("Enter the Project's title: ")
-    funding = input(
-        "Enter the Project's funding amount. Please enter 0 for no funding, or a number greater than 999: "
-    )
-    try:
-        project = Project.create(title, funding)
-        rprint(f"Successfully created {title}", style="bold green")
-        rprint(
-            "\n----------------------------------------------------------------\n",
-            style="light_slate_grey",
-        )
-    except Exception as exc:
-        rprint("Error creating Project: ", exc, style="bold red")
-        rprint(
-            "\n----------------------------------------------------------------\n",
-            style="light_slate_grey",
-        )
 
 
 def project_details(project):
@@ -498,11 +443,57 @@ def project_details_menu():
     )
 
 
+def list_projects(projects):
+    if projects:
+        for i in range(len(projects)):
+            rprint(f"{i+1}. {projects[i].title}")
+    else:
+        rprint("None")
+    rprint("\n")
+
+
+def add_project():
+    title = input("Enter the Project's title: ")
+    funding = input(
+        "Enter the Project's funding amount. Please enter 0 for no funding, or a number greater than 999: "
+    )
+    try:
+        project = Project.create(title, funding)
+        rprint(f"Successfully created {title}", style="bold green")
+        rprint(
+            "\n----------------------------------------------------------------\n",
+            style="light_slate_grey",
+        )
+    except Exception as exc:
+        rprint("Error creating Project: ", exc, style="bold red")
+        rprint(
+            "\n----------------------------------------------------------------\n",
+            style="light_slate_grey",
+        )
+
+
+def find_project_by_title():
+    title = input("Enter project title: ")
+    rprint("\n")
+    if project := Project.find_by_title(title):
+        while True:
+            if not project_details(project):
+                break
+        return True
+    else:
+        rprint(f"No project found with the title '{title}'", style="bold red")
+        rprint(
+            "\n----------------------------------------------------------------\n",
+            style="light_slate_grey",
+        )
+        return True
+
+
 def project_sites(project):
     sites = project.sites()
     rprint(f"'{project.title}' Sites:\n", style="u")
     list_sites(sites)
-    project_sites_menu()
+    projects_sites_menu()
     choice = input("> ")
     rprint("\n")
     if choice == "B":
@@ -516,3 +507,15 @@ def project_sites(project):
             style="light_slate_grey",
         )
         return True
+
+
+### MISC ###
+
+
+def projects_sites_menu():
+    rprint("Type [bold cyan]B[/bold cyan] to go back")
+    rprint("Type 0 to exit the program")
+    rprint(
+        "\n----------------------------------------------------------------\n",
+        style="light_slate_grey",
+    )

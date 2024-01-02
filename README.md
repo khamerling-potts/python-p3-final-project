@@ -6,10 +6,9 @@
 
 &nbsp;
 
-RDM (research database manager.) is a command line application that allows users to manage research sites, projects, and investigators. This project was inspired by my prior experience working in academic, government, and medical settings to conduct psychological research. Both research sites and projects
-can include many investigators, but an investigator may only work on one project at one site.
+RDM (research database manager.) is a command line application that allows users to manage research sites, projects, and investigators. This project was inspired by my prior experience working in academic, government, and medical settings to conduct psychological research. Both research sites and projects can include many investigators, but an investigator may only work on one project at one site.
 
-You can run the file `cli.py` to start up the CLI. This file first seeds the database with some sample data, but users are able to modify this data while using the application.
+You can run the file `cli.py` to start up the CLI. This file first seeds the database with sample data, then allows users to navigate the project.
 
 ## Command Line Menus
 
@@ -79,20 +78,46 @@ While viewing an investigator, you can delete them or update their site, project
 
 `add_site()` prompts the user for site details and creates a new site in the database.
 
-`find_site_by_name()` calls another function to search sites based on the user's inputted name.
+`find_site_by_name()` prompts the user for a name and calls a class method to searh the database for that site.
 
-`project_sites_menu()` displays a menu when viewing the projects associated with a site.
+`site_projects(site)` calls helper functions to display a menu of options and print the projects associated with the given site. Prompts the user for follow-up input.
 
 --
 
-`investigators(site=None, project=None)` prompts users for choices that trigger other functions involving investigators, after all investigators are rendered in the terminal. Investigators are displayed based on whether we are viewing them from within a site, project, or the full investigator list.
+`investigators(site=None, project=None)` prompts users for choices that trigger other functions involving investigators, after all investigators are displayed in the terminal. Investigators are displayed based on whether one is viewing them from within a site, project, or the full investigator list.
 
-`investigators_menu()` displays the details for an investigator and prompts the user for follow-up input, passing those values to other functions.
+`investigators_menu()` displays a menu of options when the user is viewing a list of investigators.
 
 `investigator_details()` displays the details for an investigator and prompts the user for follow-up input, passing those values to other functions.
 
 `investigator_details_menu()` displays a menu of options when the user is viewing one investigator.
 
-`list_investigators(investigators)` prints a formatted list of investigators provided as a parameter
+`list_investigators(investigators)` prints a formatted list of investigators provided as a parameter.
 
-`add_investigator(site=None, project=None)` prompts the user for investigator details and creates a new investigator in the database. `site` and `project` parameters helps determine whether to add the investigator to a given site or project, or whether the user needs to supply both.
+`add_investigator(site=None, project=None)` prompts the user for investigator details and creates a new investigator in the database. `site` and `project` parameters help determine whether to add the investigator to a given site or project, or whether the user needs to supply both.
+
+`update_investigator(investigator)` prompts the user for new investigator details and persists those changes to the database.
+
+`find_investigator_by_name()` prompts the user for a name and calls a class method to searh the database for that investigator.
+
+--
+
+`all_projects()` prompts users for choices that trigger other functions involving projects, after all projects are displayed in the terminal.
+
+`all_projects_menu()` displays a menu of options when the user is viewing a list of all projects.
+
+`project_details()` displays the details for a project and prompts the user for follow-up input, passing those values to other functions.
+
+`project_details_menu()` displays a menu of options when the user is viewing one project.
+
+`list_projects(projects)` prints a formatted list of projects provided as a parameter.
+
+`add_project()` prompts the user for project details and creates a new project in the database.
+
+`find_project_by_title()` prompts the user for a title and calls a class method to search the database for that project.
+
+`project_sites(project)` calls helper functions to display a menu of options and print a project's sites. Prompts the user for follow-up input.
+
+--
+
+`projects_sites_menu()` displays a menu of options when viewing the Sites/Projects many-to-many relationship (projects associated with a site or sites associated with a project).
