@@ -37,21 +37,15 @@ def all_sites():
         return True
 
 
-def find_site_by_name():
-    name = input("Enter site name: ")
-    rprint("\n")
-    if site := Site.find_by_name(name):
-        while True:
-            if not site_details(site):
-                break
-        return True
-    else:
-        rprint(f"No site found with the name '{name}'", style="bold red")
-        rprint(
-            "\n----------------------------------------------------------------\n",
-            style="light_slate_grey",
-        )
-        return True
+def all_sites_menu():
+    rprint("Type [bold cyan]A[/bold cyan] to add a new Site")
+    rprint("Type [bold cyan]B[/bold cyan] to go back to main menu")
+    rprint("Type the [bold cyan]number of a Site[/bold cyan] to view its details")
+    rprint("Type 0 to exit the program")
+    rprint(
+        "\n----------------------------------------------------------------\n",
+        style="light_slate_grey",
+    )
 
 
 def site_details(site):
@@ -94,16 +88,12 @@ def site_details(site):
         return True
 
 
-def list_sites(sites):
-    if sites:
-        for i in range(len(sites)):
-            rprint(f"{i+1}. {sites[i].name}")
-    else:
-        rprint("None")
-    rprint("\n")
-
-
-def project_sites_menu():
+def site_details_menu():
+    rprint("Type [bold cyan]I[/bold cyan] to view and edit this Site's Investigators")
+    rprint(
+        "Type [bold cyan]P[/bold cyan] to view the Projects associated with this Site"
+    )
+    rprint("Type [bold cyan]D[/bold cyan] to delete this Site")
     rprint("Type [bold cyan]B[/bold cyan] to go back")
     rprint("Type 0 to exit the program")
     rprint(
@@ -112,15 +102,13 @@ def project_sites_menu():
     )
 
 
-def all_sites_menu():
-    rprint("Type [bold cyan]A[/bold cyan] to add a new Site")
-    rprint("Type [bold cyan]B[/bold cyan] to go back to main menu")
-    rprint("Type the [bold cyan]number of a Site[/bold cyan] to view its details")
-    rprint("Type 0 to exit the program")
-    rprint(
-        "\n----------------------------------------------------------------\n",
-        style="light_slate_grey",
-    )
+def list_sites(sites):
+    if sites:
+        for i in range(len(sites)):
+            rprint(f"{i+1}. {sites[i].name}")
+    else:
+        rprint("None")
+    rprint("\n")
 
 
 def add_site():
@@ -145,12 +133,24 @@ def add_site():
         )
 
 
-def site_details_menu():
-    rprint("Type [bold cyan]I[/bold cyan] to view and edit this Site's Investigators")
-    rprint(
-        "Type [bold cyan]P[/bold cyan] to view the Projects associated with this Site"
-    )
-    rprint("Type [bold cyan]D[/bold cyan] to delete this Site")
+def find_site_by_name():
+    name = input("Enter site name: ")
+    rprint("\n")
+    if site := Site.find_by_name(name):
+        while True:
+            if not site_details(site):
+                break
+        return True
+    else:
+        rprint(f"No site found with the name '{name}'", style="bold red")
+        rprint(
+            "\n----------------------------------------------------------------\n",
+            style="light_slate_grey",
+        )
+        return True
+
+
+def project_sites_menu():
     rprint("Type [bold cyan]B[/bold cyan] to go back")
     rprint("Type 0 to exit the program")
     rprint(
@@ -194,6 +194,19 @@ def investigators(site=None, project=None):
             style="light_slate_grey",
         )
         return True
+
+
+def investigators_menu():
+    rprint("Type [bold cyan]A[/bold cyan] to add a new Investigator here")
+    rprint("Type [bold cyan]B[/bold cyan] to go back")
+    rprint(
+        "Type the [bold cyan]the number of an Investigator[/bold cyan] to view its details"
+    )
+    rprint("Type 0 to exit the program")
+    rprint(
+        "\n----------------------------------------------------------------\n",
+        style="light_slate_grey",
+    )
 
 
 def investigator_details(investigator):
@@ -248,36 +261,6 @@ def list_investigators(investigators):
     rprint("\n")
 
 
-def investigators_menu():
-    rprint("Type [bold cyan]A[/bold cyan] to add a new Investigator here")
-    rprint("Type [bold cyan]B[/bold cyan] to go back")
-    rprint(
-        "Type the [bold cyan]the number of an Investigator[/bold cyan] to view its details"
-    )
-    rprint("Type 0 to exit the program")
-    rprint(
-        "\n----------------------------------------------------------------\n",
-        style="light_slate_grey",
-    )
-
-
-def find_investigator_by_name():
-    name = input("Enter investigator name: ")
-    rprint("\n")
-    if investigator := Investigator.find_by_name(name):
-        while True:
-            if not investigator_details(investigator):
-                break
-        return True
-    else:
-        rprint(f"No investigator found with the name '{name}'", style="bold red")
-        rprint(
-            "\n----------------------------------------------------------------\n",
-            style="light_slate_grey",
-        )
-        return True
-
-
 def add_investigator(site=None, project=None):
     name = input("Enter the Investigator's name: ")
     project_id = (
@@ -286,10 +269,16 @@ def add_investigator(site=None, project=None):
     site_id = site.id if site else input("Enter the Investigator's site id: ")
     try:
         investigator = Investigator.create(name, site_id, project_id)
-        rprint(
-            f"Successfully added {name} to this {'Site' if site else 'Project'}'s Investigator's",
-            style="bold green",
-        )
+        if not site and not project:
+            rprint(
+                f"Successfully added {name} to the Investigators",
+                style="bold green",
+            )
+        else:
+            rprint(
+                f"Successfully added {name} to this {'Site' if site else 'Project'}'s Investigator's",
+                style="bold green",
+            )
         rprint(
             "\n----------------------------------------------------------------\n",
             style="light_slate_grey",
@@ -320,6 +309,23 @@ def update_investigator(investigator):
             "\n----------------------------------------------------------------\n",
             style="light_slate_grey",
         )
+
+
+def find_investigator_by_name():
+    name = input("Enter investigator name: ")
+    rprint("\n")
+    if investigator := Investigator.find_by_name(name):
+        while True:
+            if not investigator_details(investigator):
+                break
+        return True
+    else:
+        rprint(f"No investigator found with the name '{name}'", style="bold red")
+        rprint(
+            "\n----------------------------------------------------------------\n",
+            style="light_slate_grey",
+        )
+        return True
 
 
 def site_projects(site):

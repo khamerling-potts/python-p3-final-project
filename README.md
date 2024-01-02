@@ -58,3 +58,41 @@ While viewing an investigator, you can delete them or update their site, project
 |              From a Site              |              From a Project               |
 | :-----------------------------------: | :---------------------------------------: |
 | ![First Image](site_investigator.png) | ![Second Image](project_investigator.png) |
+
+## Helper Functions
+
+`helpers.py` contains numerous helper functions that support the CLI interactivity. Below is an overview of these functions:
+
+`exit_program()` exits the program when a user selects 0 at any point during the program.
+
+--
+
+`all_sites()` prompts users for choices that trigger other functions involving sites, after all sites are rendered in the terminal.
+
+`all_sites_menu()` displays a menu of options when the user is viewing a list of all sites.
+
+`site_details()` displays the details for a site and prompts the user for follow-up input, passing those values to other functions.
+
+`site_details_menu()` displays a menu of options when the user is viewing one site.
+
+`list_sites(sites)` prints a formatted list of sites provided as a parameter.
+
+`add_site()` prompts the user for site details and creates a new site in the database.
+
+`find_site_by_name()` calls another function to search sites based on the user's inputted name.
+
+`project_sites_menu()` displays a menu when viewing the projects associated with a site.
+
+--
+
+`investigators(site=None, project=None)` prompts users for choices that trigger other functions involving investigators, after all investigators are rendered in the terminal. Investigators are displayed based on whether we are viewing them from within a site, project, or the full investigator list.
+
+`investigators_menu()` displays the details for an investigator and prompts the user for follow-up input, passing those values to other functions.
+
+`investigator_details()` displays the details for an investigator and prompts the user for follow-up input, passing those values to other functions.
+
+`investigator_details_menu()` displays a menu of options when the user is viewing one investigator.
+
+`list_investigators(investigators)` prints a formatted list of investigators provided as a parameter
+
+`add_investigator(site=None, project=None)` prompts the user for investigator details and creates a new investigator in the database. `site` and `project` parameters helps determine whether to add the investigator to a given site or project, or whether the user needs to supply both.
