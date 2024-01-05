@@ -4,6 +4,8 @@ from models.__init__ import CONN, CURSOR
 class Site:
     all = {}
 
+    CLASSIFICATIONS = ["Government", "Academic", "Medical"]
+
     def __init__(self, name, city, classification, id=None):
         self.id = id
         self.name = name
@@ -15,6 +17,7 @@ class Site:
 
     @property
     def name(self):
+        """Site name property"""
         return self._name
 
     @name.setter
@@ -28,6 +31,7 @@ class Site:
 
     @property
     def city(self):
+        """Site city porperty"""
         return self._city
 
     @city.setter
@@ -39,12 +43,12 @@ class Site:
 
     @property
     def classification(self):
+        """Site classification property"""
         return self._classification
 
     @classification.setter
     def classification(self, classification):
-        options = ["Government", "Academic", "Medical"]
-        if classification in options:
+        if classification in type(self).CLASSIFICATIONS:
             self._classification = classification
         else:
             raise Exception(

@@ -14,6 +14,7 @@ class Project:
 
     @property
     def title(self):
+        """Project title property"""
         return self._title
 
     @title.setter
@@ -27,6 +28,7 @@ class Project:
 
     @property
     def funding(self):
+        """Project funding property"""
         return self._funding
 
     @funding.setter

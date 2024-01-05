@@ -18,6 +18,7 @@ class Investigator:
 
     @property
     def name(self):
+        """Investigator name property"""
         return self._name
 
     @name.setter
@@ -31,6 +32,7 @@ class Investigator:
 
     @property
     def site_id(self):
+        """Investigator site_id property"""
         return self._site_id
 
     @site_id.setter
@@ -46,6 +48,7 @@ class Investigator:
 
     @property
     def project_id(self):
+        """Investigator project_id property"""
         return self._project_id
 
     @project_id.setter
