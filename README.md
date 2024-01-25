@@ -1,4 +1,4 @@
-# Phase 3 Project - RDM
+# RDM (research database manager.)
 
 ## Overview
 
